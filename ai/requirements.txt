@@ -1,0 +1,10 @@
+pymupdf
+langchain
+langchain-community
+langchain-groq
+chromadb
+python-dotenv
+fastapi
+uvicorn
+pydantic
+rank-bm25
