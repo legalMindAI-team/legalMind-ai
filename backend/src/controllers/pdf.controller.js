@@ -11,7 +11,7 @@ exports.uploadAndForward = async (req, res) => {
       return new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           { 
-            folder: "legalmind_pdfs", 
+            folder: "", 
             resource_type: "raw" // Use "raw" for PDFs
           },
           (error, result) => {
