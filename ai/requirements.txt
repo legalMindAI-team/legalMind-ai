@@ -1,10 +1,40 @@
-pymupdf
-langchain
-langchain-community
-langchain-groq
-chromadb
-python-dotenv
-fastapi
-uvicorn
-pydantic
-rank-bm25
+# Core Framework
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.18
+
+# PDF Parsing
+PyMuPDF==1.25.3
+
+# LangChain ecosystem
+langchain==0.3.14
+langchain-community==0.3.14
+langchain-openai==0.3.1
+langchain-core>=0.3.28
+
+# Embeddings (free, local — for development)
+sentence-transformers==3.3.1
+
+# Vector Store
+chromadb==0.6.3
+
+# BM25 search
+rank-bm25==0.2.2
+
+# Reranking
+cohere==5.13.3
+
+# LLM (free dev)
+langchain-groq==0.3.1
+
+# LangGraph (agent orchestration)
+langgraph==0.2.60
+
+# Structured output
+pydantic==2.10.4
+
+# Environment variables
+python-dotenv==1.0.1
+
+# Utilities
+httpx==0.28.1
