@@ -7,13 +7,19 @@ exports.uploadAndForward = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
+    const baseFileName = req.file.originalname.replace(/\.[^/.]+$/, '');
+
     // 1. Upload Buffer to Cloudinary
     const streamUpload = (req) => {
       return new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           { 
             folder: "legalmind_pdfs", 
-            resource_type: "raw" // Use "raw" for PDFs
+            resource_type: "image",
+            format: "pdf",
+            use_filename: true,
+            unique_filename: true,
+            filename_override: baseFileName
           },
           (error, result) => {
             if (result) resolve(result);
@@ -25,11 +31,16 @@ exports.uploadAndForward = async (req, res) => {
     };
 
     const cloudinaryResult = await streamUpload(req);
+    const pdfUrl = cloudinary.url(cloudinaryResult.public_id, {
+      resource_type: 'image',
+      format: 'pdf',
+      secure: true
+    });
 
     // 2. Save Metadata to MongoDB
     const newFile = await File.create({
       fileName: req.file.originalname,
-      cloudinaryUrl: cloudinaryResult.secure_url,
+      cloudinaryUrl: pdfUrl,
       public_id: cloudinaryResult.public_id,
       status: 'uploaded_successfully' // Changed status for testing
     });
